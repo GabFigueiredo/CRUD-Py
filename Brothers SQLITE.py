@@ -7,28 +7,49 @@
 
 import os
 import inquirer
+import sqlite3
 
 amarelo = '\033[33m'
 verde = '\033[32m'
 azul = '\033[34m'
 fim = '\033[0m'
 
-def Load_txt(): #Ler o txt
-    L1 = {}
-    with open("dados.txt", 'r') as Dados:
-        for line in Dados:
-            # Dividir a linha em partes
-            parts = line.rstrip().split(",")
-            # Converter o primeiro elemento para um número
-            key = int(parts[0])
-            # Atribuir os valores ao dicionário
-            L1[key] = [parts[1], int(parts[2]), float(parts[3])]
-    return L1
+# Funçẽs do banco de dados
 
-def Save_txt(Dict): #Salvar o txt
-    with open ("dados.txt", "w") as Dados:
-               for chave, dados in Dict.items():
-                   Dados.write(f"{chave},{dados[0]},{dados[1]},{dados[2]}\n")
+def consulta_db(): #Consulta retorna um dicionário
+    Mat = {}
+    with sqlite3.connect("sqlite.db") as conexao:
+            cursor = conexao.cursor() # No pdf ta com with, mas pra min funcionou assim
+            cursor.execute("SELECT * FROM dados") # Seleciona tudo de dados
+            rows = cursor.fetchall() # O método busca todas (ou todas as linhas restantes) de um conjunto de resultados de consulta e retorna uma lista de tuplas. // Definição do site do MySQL
+            # Inclusive ta no pdf também
+            if rows: # Confere se não ta vazio
+                for row in rows: # Seleciona cada row, numa iteração
+                    Mat[row[0]] = [row[1], row[2], row[3]] # Transforma no dicionário
+    return Mat
+
+def criar_db(cod, nome, quant, preco): #Cria um item no SQLite
+    with sqlite3.connect("sqlite.db") as conexao:
+        cursor = conexao.cursor()
+        # Em baixo, ta exatamente igual no pdf
+        cursor.execute("INSERT INTO dados (código, material, quantidade, preço) VALUES (?, ?, ?, ?)", (cod, nome, quant, preco))
+        conexao.commit() # Commit dos crias
+
+def deletar_db(cod): #Deleta um item pelo código
+     with sqlite3.connect("sqlite.db") as conexao:
+          cursor = conexao.cursor()
+          cursor.execute(f"DELETE FROM dados where código = '{cod}'") # Deleta de dados onde código == cod
+          conexao.commit() # Commit dos crias
+
+def alterar_db(cod, nome, quant, preco): #Altera um item no SQLite
+     with sqlite3.connect("sqlite.db") as conexao:
+          cursor = conexao.cursor()
+          cursor.execute(f"UPDATE dados set material = '{nome}' where código ='{cod}'") # Muda material pra nome onde código é cod
+          cursor.execute(f"UPDATE dados set quantidade = '{quant}' where código ='{cod}'") # Muda material pra quant onde código é cod
+          cursor.execute(f"UPDATE dados set preço = '{preco}' where código ='{cod}'") # Muda preco pra quant onde código é cod
+          conexao.commit() # Commit dos crias
+
+# Funções de interface
 
 def confirmação(mensagem): #Confirmação pra continuar
     pergunta_conf = [inquirer.List("opt", message=mensagem, choices=["Sim", "Não"], )]
@@ -69,6 +90,8 @@ def singleRow(cod, cor): #Printa a linha de um produto só
     print(f"{cor}|{' '*20} |{' '*20} |{' '*20} |{' '*20}|{fim}")
     print(f"{cor}|{cod:^20} |{Mat[cod][0]:^20} |{Mat[cod][1]:^20} |{'R$'+str(Mat[cod][2]):^20}|{fim}")
     print(f"{cor}|{'_'*20}_|{'_'*20}_|{'_'*20}_|{'_'*20}|{fim}\n")
+
+# Funções da lógica
 
 def incluir(): #Função para o método incluir
     os.system('clear')
@@ -452,7 +475,7 @@ while True: #Lógica da escolha
     ██████╔╝██║  ██║╚██████╔╝   ██║   ██║  ██║███████╗██║  ██║███████║    ██████╔╝███████╗╚██████╔╝╚██████╗██║  ██╗
     ╚═════╝ ╚═╝  ╚═╝ ╚═════╝    ╚═╝   ╚═╝  ╚═╝╚══════╝╚═╝  ╚═╝╚══════╝    ╚═════╝ ╚══════╝ ╚═════╝  ╚═════╝╚═╝  ╚═╝\n''')
    opt= inquirer.prompt(questions)
-   Mat = Load_txt()
+   Mat = load_sq()
    if opt['opt']=="Incluir Item":
        incluir()
    elif opt['opt']=="Pesquisar Itens":
@@ -467,4 +490,3 @@ while True: #Lógica da escolha
        os.system('clear')
        print(f"{azul}Saindo...{fim}")
        break
-   
