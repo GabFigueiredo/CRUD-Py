@@ -94,7 +94,7 @@ def singleRow(cod, cor): #Printa a linha de um produto só
 # Funções da lógica
 
 def incluir(): #Função para o método incluir
-    os.system('clear')
+    os.system('cls')
     print(f"{azul}Incluir Material{fim}\n")
     chaves = ", ".join(str(key) for key in Mat.keys())
     print(f'{azul}Os códigos que já estão em uso são: {fim}{chaves}\n')
@@ -102,46 +102,46 @@ def incluir(): #Função para o método incluir
         try:
             cod = int(input(f"Insira um novo código para o Material: "))
             if cod in Mat:
-                os.system('clear')
+                os.system('cls')
                 print(f'\n{amarelo}Um produto já se refere a este código\n{fim}')
                 conf = confirmação('Deseja tentar novamente?')
                 if conf['opt'] == "Não":
                     return
                 else:
-                    os.system('clear')
+                    os.system('cls')
                     print(f"{azul}Incluir Material{fim}\n")
                     print(f'{azul}As chaves que já estão em uso são: {fim}{chaves}\n')
             elif cod < 0:
-                os.system('clear')
+                os.system('cls')
                 print(f"{azul}Incluir Material{fim}\n")
                 print(f'{azul}As chaves que já estão em uso são: {fim}{chaves}\n')
                 print(f'{amarelo}Por favor insira um número positivo\n{fim}')        
             else:
                 break
         except ValueError:
-            os.system('clear')
+            os.system('cls')
             print(f"{azul}Incluir Material{fim}\n")
             print(f'{azul}Os códigos que já estão em uso são: {fim}{chaves}\n')
             print(f'{amarelo}Por favor insira um valor válido\n{fim}')
-    os.system("clear")
+    os.system("cls")
     print(f"\n{azul}{'INCLUSÃO DE MATERIAL':^88}{fim}\n")            
     preencher_row(cod, '', '', '', azul)  
     nome=input(f"Insira o nome do Material: ")
-    os.system('clear')
+    os.system('cls')
     print(f"\n{azul}{'INCLUSÃO DE MATERIAL':^88}{fim}\n")            
     preencher_row(cod, nome, '', '', azul)
     while True:  
         try:
             quant = int(input(f"Insira a quantidade: "))
-            os.system('clear')
+            os.system('cls')
             if quant <= 0:
-                os.system('clear')
+                os.system('cls')
                 print(f"\n{azul}{'INCLUSÃO DE MATERIAL':^88}{fim}\n")
                 preencher_row(cod, nome, '', '', azul) 
                 print(f'{amarelo}Por favor insira um número positivo\n{fim}')
             else: break
         except ValueError:
-            os.system('clear')
+            os.system('cls')
             print(f"\n{azul}{'INCLUSÃO DE MATERIAL':^88}{fim}\n")
             preencher_row(cod, nome, '', '', azul) 
             print(f'{amarelo}Por favor insira um valor válido\n{fim}')
@@ -151,20 +151,20 @@ def incluir(): #Função para o método incluir
         try:
             valor=float(input(f"Insira o valor do material: "))
             if valor <= 0:
-                os.system('clear')
+                os.system('cls')
                 print(f"\n{azul}{'INCLUSÃO DE MATERIAL':^88}{fim}\n")
                 preencher_row(cod, nome, quant, '', azul)
                 print(f'{amarelo}Por favor insira um número positivo\n{fim}') 
             else: break
         except ValueError:
-            os.system('clear')
+            os.system('cls')
             print(f"\n{azul}{'INCLUSÃO DE MATERIAL':^88}{fim}\n")
             preencher_row(cod, nome, quant, '', azul)
             print(f'{amarelo}Por favor insira um valor válido\n{fim}')  
 
     criar_db(cod, nome, quant, valor)
     
-    os.system('clear')
+    os.system('cls')
     print(f"\n{azul}{'INCLUSÃO DE MATERIAL':^88}{fim}\n")
     preencher_row(cod, nome, quant, valor, azul)
 
@@ -172,14 +172,14 @@ def incluir(): #Função para o método incluir
     input('Pressione ENTER para voltar ao menu')
 
 def excluir(): #Função para o método excluir
-    os.system('clear')
+    os.system('cls')
     print(f"\n{azul}{'EXCLUSÃO DE MATERIAL':^88}{fim}\n")
     tabela(Mat)
     while True:    
         try:
             excluir_item= int(input("\nInsira o codigo do material a ser removido: "))
             if excluir_item not in Mat:
-                os.system('clear')
+                os.system('cls')
                 print(f"\n{azul}{'EXCLUSÃO DE MATERIAL':^88}{fim}\n")
                 tabela(Mat)
                 print(f'{amarelo}\nO código digitado não se encontra no sistema{fim}\n')
@@ -187,13 +187,13 @@ def excluir(): #Função para o método excluir
                 if conf['opt'] == "Não":
                     return
                 else:
-                    os.system('clear')
+                    os.system('cls')
                     print(f"\n{azul}{'EXCLUSÃO DE MATERIAL':^88}{fim}\n")
                     tabela(Mat)
             else:
                 break
         except ValueError:
-            os.system('clear')
+            os.system('cls')
             print(f"\n{azul}{'EXCLUSÃO DE MATERIAL':^88}{fim}\n")
             tabela(Mat)
             print(f'{amarelo}\nPor favor insira um valor válido{fim}')  
@@ -203,12 +203,12 @@ def excluir(): #Função para o método excluir
         conf = confirmação(f'{amarelo}Tem certeza que deseja remover?{fim}')
         if conf['opt'] == "Sim":
             deletar_db(excluir_item)
-            os.system('clear')
+            os.system('cls')
             print(f"\n{azul}{'EXCLUSÃO DE MATERIAL':^88}{fim}\n")
             tabela(Mat)
             print(f"{verde}\nMaterial removido com sucesso!\n{fim}")
         else:
-            os.system('clear')
+            os.system('cls')
             input("Pressione ENTER para voltar ao menu")
             return             
     else:
@@ -218,7 +218,7 @@ def excluir(): #Função para o método excluir
     input("Pressione ENTER para voltar ao menu")
 
 def reserva_de_material(): #Função para o método reserva
-    os.system('clear')
+    os.system('cls')
     print(f"\n{azul}{'RESERVA DE MATERIAL':^88}{fim}\n")
     tabela(Mat)
     
@@ -231,20 +231,20 @@ def reserva_de_material(): #Função para o método reserva
                 if conf['opt'] == "Não":
                     return
                 else:
-                    os.system('clear')
+                    os.system('cls')
                     print(f"\n{azul}{'RESERVA DE MATERIAL':^88}{fim}\n")
                     tabela(Mat)
             else:
                 break
         except ValueError:
-            os.system('clear')
+            os.system('cls')
             print(f"\n{azul}{'RESERVA DE MATERIAL':^88}{fim}\n")
             tabela(Mat)
             print(f'{amarelo}\nPor favor, insira um valor válido{fim}')
 
     if cod_material in Mat:
         quantidade_disponivel = Mat[cod_material][1]
-        os.system('clear')
+        os.system('cls')
         print(f"\n{azul}{'RESERVA DE MATERIAL':^88}{fim}\n")
         singleRow(cod_material, azul)
         
@@ -252,14 +252,14 @@ def reserva_de_material(): #Função para o método reserva
             try:
                 quantidade_reservar = int(input("Insira a quantidade que deseja reservar: "))
                 if quantidade_reservar < 1:
-                    os.system('clear')
+                    os.system('cls')
                     print(f"\n{azul}{'RESERVA DE MATERIAL':^88}{fim}\n")
                     singleRow(cod_material, azul)
                     print(f'{amarelo}Por favor, insira um valor positivo\n{fim}')
                 else:
                     break
             except ValueError:
-                os.system('clear')
+                os.system('cls')
                 print(f"\n{azul}{'RESERVA DE MATERIAL':^88}{fim}\n")
                 singleRow(cod_material, azul)
                 print(f'{amarelo}Por favor, insira um valor válido\n{fim}')
@@ -272,7 +272,7 @@ def reserva_de_material(): #Função para o método reserva
             return
         else:
             Mat[cod_material][1] -= quantidade_reservar
-            os.system('clear')
+            os.system('cls')
             print(f"\n{azul}{'RESERVA DE MATERIAL':^88}{fim}\n")
             singleRow(cod_material, azul)
             print(f"{verde}Material reservado com sucesso!\n{fim}")
@@ -286,7 +286,7 @@ def reserva_de_material(): #Função para o método reserva
     print(f"{azul}") #cor azul
 
 def pesquisar(): #Função para o método pesquisa
-    os.system('clear')
+    os.system('cls')
     print(f"\n{azul}{'PESQUISAR ITENS':^40}{fim}\n")
     pergunta = [
     inquirer.List(
@@ -299,7 +299,7 @@ def pesquisar(): #Função para o método pesquisa
 
     
     if opt['opt']=="Pesquisar por código": # Pesquisa por código do produto
-        os.system('clear')
+        os.system('cls')
         print(f"\n{azul}{'PESQUISAR ITENS':^88}{fim}\n")
         preencher_row('', '', '', '', azul)
         chaves = ", ".join(str(key) for key in Mat.keys())
@@ -308,7 +308,7 @@ def pesquisar(): #Função para o método pesquisa
             try:
                 cod = int(input("\nInsira o codigo do material a ser pesquisado: "))
                 if cod not in Mat:
-                    os.system('clear')
+                    os.system('cls')
                     print(f"\n{azul}{'PESQUISAR ITENS':^88}{fim}\n")
                     preencher_row('', '', '', '', azul)
                     chaves = ", ".join(str(key) for key in Mat.keys())
@@ -318,18 +318,18 @@ def pesquisar(): #Função para o método pesquisa
                     if conf['opt'] == "Não":
                         return
                     else:
-                        os.system('clear')
+                        os.system('cls')
                         print(f"\n{azul}{'PESQUISAR ITENS':^88}{fim}\n")
                         preencher_row('', '', '', '', azul)
                         chaves = ", ".join(str(key) for key in Mat.keys())
                         print(f'{azul}Os códigos presentes no sistema são: {fim}{chaves}')
                 else:
-                    os.system('clear')
+                    os.system('cls')
                     print(f"\n{azul}{'PESQUISAR ITENS':^88}{fim}\n")
                     singleRow(cod, azul)
                     break
             except ValueError:
-                os.system('clear')
+                os.system('cls')
                 print(f"\n{azul}{'PESQUISAR ITENS':^88}{fim}\n")
                 preencher_row('', '', '', '', azul)
                 chaves = ", ".join(str(key) for key in Mat.keys())
@@ -338,40 +338,40 @@ def pesquisar(): #Função para o método pesquisa
         input('Pressione ENTER para voltar ao menu')    
 
     elif opt['opt']=="Pesquisar por nome": # Pesquisa por nome do produto
-        os.system('clear')
+        os.system('cls')
         print(f"\n{azul}{'PESQUISAR ITENS':^88}{fim}\n")
         preencher_row('', '', '', '', azul)
         nome = input('Insira o nome a ser pesquisado: ')
         nome = nome.lower()
         for chave, dados in Mat.items():
             if dados[0].lower() == nome:
-                os.system('clear')
+                os.system('cls')
                 print(f"\n{azul}{'PESQUISAR ITENS':^88}{fim}\n")
                 singleRow(chave, azul)
                 input('Pressione ENTER para voltar ao menu')
                 encontrado = True
                 break
         if not encontrado:
-            os.system('clear')    
+            os.system('cls')    
             print(f"\n{azul}{'PESQUISAR ITENS':^88}{fim}\n")
             preencher_row('', '' ,'' ,'', azul)
             print(f"{amarelo}Material não encontrado\n{fim}")   
             input('Pressione ENTER para voltar ao menu')
     elif opt['opt']=="Mostrar tabela": # Mostrar toda a tabela
-        os.system('clear')
+        os.system('cls')
         print(f"\n{azul}{'PESQUISAR ITENS':^88}{fim}\n")
         tabela(Mat)
         input('\nPressione ENTER para voltar ao menu')
    
 def editar(): #Função para o método editar
-    os.system('clear')
+    os.system('cls')
     print(f"\n{azul}{'EDIÇÃO DE ITENS':^88}{fim}\n")
     tabela(Mat)
     while True:
         try:
             cod= int(input("\nInsira o codigo do material a ser editado: "))
             if cod not in Mat:
-                os.system('clear')
+                os.system('cls')
                 print(f"\n{azul}{'EDIÇÃO DE ITENS':^88}{fim}\n")
                 tabela(Mat)
                 print(f'{amarelo}\nO código digitado não se encontra no sistema{fim}\n')
@@ -379,23 +379,23 @@ def editar(): #Função para o método editar
                 if conf['opt'] == "Não":
                     return
                 else:
-                    os.system('clear')
+                    os.system('cls')
                     print(f"\n{azul}{'EDIÇÃO DE ITENS':^88}{fim}\n")
                     tabela(Mat)
             else:
                 break
         except ValueError:
-            os.system('clear')
+            os.system('cls')
             print(f"\n{azul}{'EDIÇÃO DE ITENS':^88}{fim}\n")
             tabela(Mat)
             print(f'{amarelo}\nPor favor insira um valor válido{fim}') 
-    os.system('clear')
+    os.system('cls')
     print(f"\n{azul}{'EDIÇÃO DE ITENS':^88}{fim}\n")        
     singleRow(cod, azul)
     print(f"{verde}\n{'Este item passará a ser:':^88}{fim}")
     preencher_row(cod, '', '', '', verde)
     nome = input('\nInsira um novo nome para o item: ')
-    os.system('clear')
+    os.system('cls')
     print(f"\n{azul}{'EDIÇÃO DE ITENS':^88}{fim}\n")
     singleRow(cod, azul)
     print(f"{verde}\n{'Este item passará a ser:':^88}{fim}")
@@ -403,9 +403,9 @@ def editar(): #Função para o método editar
     while True:
         try:
             quant = int(input(f"Insira a quantidade: "))
-            os.system('clear')
+            os.system('cls')
             if quant <= 0:
-                os.system('clear')
+                os.system('cls')
                 print(f"\n{azul}{'EDIÇÃO DE ITENS':^88}{fim}\n")
                 singleRow(cod, azul)
                 print(f"{verde}\n{'Este item passará a ser:':^88}{fim}")
@@ -413,13 +413,13 @@ def editar(): #Função para o método editar
                 print(f'{amarelo}\nPor favor insira um número positivo\n{fim}')
             else: break
         except ValueError:
-            os.system('clear')
+            os.system('cls')
             print(f"\n{azul}{'EDIÇÃO DE ITENS':^88}{fim}\n")
             singleRow(cod, azul)
             print(f"{verde}\n{'Este item passará a ser:':^88}{fim}")
             preencher_row(cod, nome, '', '', verde)
             print(f'{amarelo}\nPor favor insira um valor válido\n{fim}')
-    os.system('clear')
+    os.system('cls')
     print(f"\n{azul}{'EDIÇÃO DE ITENS':^88}{fim}\n")
     singleRow(cod, azul)
     print(f"{verde}\n{'Este item passará a ser:':^88}{fim}")
@@ -428,7 +428,7 @@ def editar(): #Função para o método editar
         try:
             valor=float(input(f"Insira o valor do material: "))
             if valor <= 0:
-                os.system('clear')
+                os.system('cls')
                 print(f"\n{azul}{'EDIÇÃO DE ITENS':^88}{fim}\n")
                 singleRow(cod, azul)
                 print(f"{verde}\n{'Este item passará a ser:':^88}{fim}")
@@ -436,13 +436,13 @@ def editar(): #Função para o método editar
                 print(f'{amarelo}\nPor favor insira um número positivo\n{fim}') 
             else: break
         except ValueError:
-            os.system('clear')
+            os.system('cls')
             print(f"\n{azul}{'EDIÇÃO DE ITENS':^88}{fim}\n")
             singleRow(cod, azul)
             print(f"{verde}\n{'Este item passará a ser:':^88}{fim}")
             preencher_row(cod, nome, quant, '', verde)
             print(f'{amarelo}\nPor favor insira um valor válido\n{fim}')
-    os.system('clear')
+    os.system('cls')
     print(f"\n{azul}{'EDIÇÃO DE ITENS':^88}{fim}\n")
     singleRow(cod, azul)
     print(f"{verde}\n{'Este item passará a ser:':^88}{fim}")
@@ -459,7 +459,7 @@ while True: #Lógica da escolha
         choices=["Incluir Item", "Pesquisar Itens", "Excluir Material", "Editar Material", "Reservar Material", "Sair"],
     ),
 ]
-   os.system('clear')
+   os.system('cls')
    print(f"{azul}") #cor azul
    print('''
     ██████╗ ██████╗  ██████╗ ████████╗██╗  ██╗███████╗██████╗ ███████╗    ██████╗ ██╗      ██████╗  ██████╗██╗  ██╗
@@ -481,6 +481,6 @@ while True: #Lógica da escolha
    elif opt['opt'] == "Editar Material":
        editar()                    
    elif opt['opt']== "Sair":
-       os.system('clear')
+       os.system('cls')
        print(f"{azul}Saindo...{fim}")
        break
