@@ -14,7 +14,7 @@ verde = '\033[32m'
 azul = '\033[34m'
 fim = '\033[0m'
 
-# Funçẽs do banco de dados
+# Funções do banco de dados
 
 def consulta_db(): #Consulta retorna um dicionário
     Mat = {}
@@ -162,8 +162,7 @@ def incluir(): #Função para o método incluir
             preencher_row(cod, nome, quant, '', azul)
             print(f'{amarelo}Por favor insira um valor válido\n{fim}')  
 
-    Mat[cod]=[nome,quant,valor]
-    Save_txt(Mat)
+    criar_db(cod, nome, quant, valor)
     
     os.system('clear')
     print(f"\n{azul}{'INCLUSÃO DE MATERIAL':^88}{fim}\n")
@@ -203,8 +202,7 @@ def excluir(): #Função para o método excluir
         print('')
         conf = confirmação(f'{amarelo}Tem certeza que deseja remover?{fim}')
         if conf['opt'] == "Sim":
-            del Mat[excluir_item]
-            Save_txt(Mat)
+            deletar_db(excluir_item)
             os.system('clear')
             print(f"\n{azul}{'EXCLUSÃO DE MATERIAL':^88}{fim}\n")
             tabela(Mat)
@@ -274,7 +272,6 @@ def reserva_de_material(): #Função para o método reserva
             return
         else:
             Mat[cod_material][1] -= quantidade_reservar
-            Save_txt(Mat)
             os.system('clear')
             print(f"\n{azul}{'RESERVA DE MATERIAL':^88}{fim}\n")
             singleRow(cod_material, azul)
@@ -450,10 +447,7 @@ def editar(): #Função para o método editar
     singleRow(cod, azul)
     print(f"{verde}\n{'Este item passará a ser:':^88}{fim}")
     preencher_row(cod, nome, quant, valor, verde)
-    Mat[cod][0]= nome
-    Mat[cod][1]= quant
-    Mat[cod][2]= valor
-    Save_txt(Mat)
+    alterar_db(cod, nome, quant, valor)
     print(f"{azul}\n{'Item alterado com sucesso':^88}{fim}")
     input('\nPressione ENTER para voltar para o MENU')
             
@@ -474,8 +468,8 @@ while True: #Lógica da escolha
     ██╔══██╗██╔══██╗██║   ██║   ██║   ██╔══██║██╔══╝  ██╔══██╗╚════██║    ██╔══██╗██║     ██║   ██║██║     ██╔═██╗
     ██████╔╝██║  ██║╚██████╔╝   ██║   ██║  ██║███████╗██║  ██║███████║    ██████╔╝███████╗╚██████╔╝╚██████╗██║  ██╗
     ╚═════╝ ╚═╝  ╚═╝ ╚═════╝    ╚═╝   ╚═╝  ╚═╝╚══════╝╚═╝  ╚═╝╚══════╝    ╚═════╝ ╚══════╝ ╚═════╝  ╚═════╝╚═╝  ╚═╝\n''')
+   Mat = consulta_db()
    opt= inquirer.prompt(questions)
-   Mat = load_sq()
    if opt['opt']=="Incluir Item":
        incluir()
    elif opt['opt']=="Pesquisar Itens":
